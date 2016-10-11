@@ -1,77 +1,85 @@
-app.MapManager = function () {
+var Map = (function (Weather) {
 
-    var self = this;
+    var _map = null;
+    var _marker = null;
+    var _window = null;
 
-    self.map = null;
-    self.marker = null;
-
-    self.init = function () {
-
-        self.getLocation()
+    var _init = function () {
+        _getLocation()
             .then(function (position) {
-                self.createMap(position);
-            })
-            .fail(function (error) {
-                self.createMap();
+                _createMap(position);
+            }, function (error) {
+                console.error(error);
+                _createMap();
             });
-
     };
 
-    self.placeMarker = function (location) {
+    var _getLocation = function () {
+        return new Promise(function (resolve, reject) {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+    };
 
-        if (self.marker === null) {
-            self.marker = new google.maps.Marker({
+    var _placeMarker = function (location) {
+        
+        if (_marker === null) {
+            _marker = new google.maps.Marker({
                 position: location,
-                map: self.map
+                map: _map
             });
         } else {
-            self.marker.setPosition(location);
+            _marker.setPosition(location);
         }
 
-        document.dispatchEvent(new CustomEvent('markerPlaced', {
-            detail: {
-                lat: self.marker.getPosition().lat(),
-                long: self.marker.getPosition().lng()
-            }
-        }));
+        Weather.getForecast({
+            lat: _marker.getPosition().lat(),
+            long: _marker.getPosition().lng()
+        })
+            .then(function (data) {
+                _openWindow(data);
+            });
 
     };
 
-    self.getLocation = function () {
+    var _openWindow = function (data) {
 
-        var deferred = $.Deferred();
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(deferred.resolve, deferred.reject);
-        } else {
-            deferred.reject();
+        if (_window) {
+            console.log('oi');
+            _window.close();
         }
 
-        return deferred.promise();
+        _window = new google.maps.InfoWindow({
+            content: "bubbubah"
+        });
+
+        _window.open(_map, _marker);
+
     };
 
-    self.createMap = function (position) {
+    var _createMap = function (position) {
 
-        var coordinates = {
-            lat: 0.0,
-            lng: 0.0
-        };
+        var coordinates = { lat: 0.0, lng: 0.0 };
 
         if (position) {
-            coordinates = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            }
+            coordinates = { 
+                lat: position.coords.latitude, 
+                lng: position.coords.longitude 
+            };
         }
 
-        self.map = new google.maps.Map(document.querySelector('#map'), {
+        _map = new google.maps.Map(document.querySelector('#map'), {
             center: coordinates,
-            zoom: 7
+            zoom: 8
         });
 
-        self.map.addListener('click', function (event) {
-            self.placeMarker(event.latLng);
+        _map.addListener('click', function (event) {
+            _placeMarker(event.latLng);
         });
-    }
 
-};
+    };
+
+    return {
+        init: _init
+    };
+
+}(Weather));

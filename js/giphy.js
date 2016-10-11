@@ -1,14 +1,14 @@
-app.GiphyFactory = function (searchTerm, options) {
+var Giphy = (function () {
 
-    var APIKey = 'dc6zaTOxFJmzC';
-    var requestBaseURL = 'http://api.giphy.com/v1/gifs/search?api_key=' + APIKey;
+    var _APIKey = 'dc6zaTOxFJmzC';
+    var _requestBaseURL = 'http://api.giphy.com/v1/gifs/search?api_key=' + _APIKey;
 
-    var createQueryURL = function () {
+    var _createQueryURL = function (searchTerm, options) {
 
-        var url = requestBaseURL + "&q=" + searchTerm;
+        var url = _requestBaseURL + "&q=" + searchTerm;
 
-        if (typeof(options) === "object") {
-            for (prop in options) {
+        if (typeof options === "object") {
+            for (var prop in options) {
                 if (!options.hasOwnProperty(prop)) return;
                 url += "&" + prop + "=" + options[prop];
             }
@@ -17,13 +17,4 @@ app.GiphyFactory = function (searchTerm, options) {
         return url;
     };
 
-    $.ajax({
-        method: 'GET',
-        url: createQueryURL(),
-        success: function (data) {
-            //TODO: Do something here too ;D
-            console.log(data);
-        }
-    });
-
-};
+}());

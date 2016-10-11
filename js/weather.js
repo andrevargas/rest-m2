@@ -1,25 +1,17 @@
-app.WeatherManager = function () {
+var Weather = (function () {
 
-    var APIKey = 'eaed9c0ce907992ee2b7418dd1ec7f8b';
-    var requestBaseURL = "http://api.openweathermap.org/data/2.5/weather?appid=" + APIKey;
+    var _APIKey = 'eaed9c0ce907992ee2b7418dd1ec7f8b';
+    var _requestBaseURL = "http://api.openweathermap.org/data/2.5/weather?appid=" + _APIKey;
 
-    var self = this;
-
-    self.getWeather = function (location) {
-        $.ajax({
+    var _getForecast = function (location) {
+        return $.ajax({
             method: 'GET',
-            url: requestBaseURL + "&lat=" + location.lat + "&lon=" + location.long,
-            success: function (data) {
-                //TODO: Do something with this data ;)
-                console.log(data);
-            }
+            url: _requestBaseURL + "&lat=" + location.lat + "&lon=" + location.long
         });
     };
 
-    self.listen = function (event) {
-        document.addEventListener(event, function (ev) {
-            self.getWeather(ev.detail);
-        });
-    }
+    return {
+        getForecast: _getForecast
+    };
 
-};
+}());
