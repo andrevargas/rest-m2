@@ -15,6 +15,12 @@ var Giphy = (function () {
         }
 
         return url;
+
     };
+
+    return $.ajax({
+        method: 'GET',  
+        url: _createQueryURL()
+    });
 
 }());

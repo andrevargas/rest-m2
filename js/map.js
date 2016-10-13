@@ -21,7 +21,7 @@ var Map = (function (Weather) {
     };
 
     var _placeMarker = function (location) {
-        
+
         if (_marker === null) {
             _marker = new google.maps.Marker({
                 position: location,
@@ -36,23 +36,8 @@ var Map = (function (Weather) {
             long: _marker.getPosition().lng()
         })
             .then(function (data) {
-                _openWindow(data);
+                
             });
-
-    };
-
-    var _openWindow = function (data) {
-
-        if (_window) {
-            console.log('oi');
-            _window.close();
-        }
-
-        _window = new google.maps.InfoWindow({
-            content: "bubbubah"
-        });
-
-        _window.open(_map, _marker);
 
     };
 
@@ -61,9 +46,9 @@ var Map = (function (Weather) {
         var coordinates = { lat: 0.0, lng: 0.0 };
 
         if (position) {
-            coordinates = { 
-                lat: position.coords.latitude, 
-                lng: position.coords.longitude 
+            coordinates = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
             };
         }
 
@@ -78,8 +63,10 @@ var Map = (function (Weather) {
 
     };
 
+    var _
+
     return {
         init: _init
     };
 
-}(Weather));
+}(Weather, Giphy));
