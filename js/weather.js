@@ -8,7 +8,7 @@ var Weather = (function () {
             method: 'GET',
             url: _requestBaseURL + "&lat=" + location.lat + "&lon=" + location.long
         });
-    };
+    };  
 
     return {
         getForecast: _getForecast

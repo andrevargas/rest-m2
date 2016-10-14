@@ -18,9 +18,15 @@ var Giphy = (function () {
 
     };
 
-    return $.ajax({
-        method: 'GET',  
-        url: _createQueryURL()
-    });
+    var _getList = function (searchTerm, options) {
+        return $.ajax({
+            method: 'GET',  
+            url: _createQueryURL(searchTerm, options)
+        });
+    };
+
+    return {
+        getList: _getList
+    };
 
 }());

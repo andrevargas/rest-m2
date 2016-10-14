@@ -36,7 +36,7 @@ var Map = (function (Weather) {
             long: _marker.getPosition().lng()
         })
             .then(function (data) {
-                
+                _openInfoWindow(data);
             });
 
     };
@@ -63,7 +63,23 @@ var Map = (function (Weather) {
 
     };
 
-    var _
+    var _openInfoWindow = function (data) {
+
+        var searchTerm = data.weather[0].description;
+        var options = { limit: 5, offset: Math.floor(Math.random() * 5) };
+
+        Giphy.getList(searchTerm, options)
+            .then(function (result) {
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: "<img src='" + result.data[0].images.original.url + "' />"
+                });
+
+                infoWindow.open(_map, _marker);
+
+            });
+
+    };
 
     return {
         init: _init
