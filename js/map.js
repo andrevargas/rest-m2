@@ -53,7 +53,9 @@ var Map = (function (Weather, Giphy, Menu) {
 
         _map = new google.maps.Map(document.querySelector('#map'), {
             center: coordinates,
-            zoom: 8
+            zoom: 8,
+            mapTypeControl: false,
+            streetViewControl: false
         });
 
         _map.addListener('click', function (event) {
