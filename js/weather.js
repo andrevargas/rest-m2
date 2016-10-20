@@ -6,7 +6,7 @@ var Weather = (function () {
     var _getForecast = function (location) {
         return $.ajax({
             method: 'GET',
-            url: _requestBaseURL + "&lat=" + location.lat + "&lon=" + location.long
+            url: _requestBaseURL + "&lat=" + location.lat + "&lon=" + location.long + "&units=metric"
         });
     };  
 

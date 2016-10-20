@@ -3,19 +3,36 @@
     <head>
         <meta charset="utf-8" />
         <title>Trabalho REST | M2</title>
+        <link rel="stylesheet" type="text/css" href="css/default.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
     <body onload="Map.init();">
+
+        <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+            <button onclick='Menu.close();'>×</button>
+            <h4 id="city"></h4>
+            <div id="slider">
+                <a href="#" class="control_next">></a>
+                <a href="#" class="control_prev"><</a>
+                <ul id="weatherGifs">                
+                </ul>  
+            </div>
+            <div id="weatherInfo"></div>
+        </nav>
 
         <div id="map"></div>
 
         <!-- Libraries -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbnpJc20DqIp6jWwORP7BOY9JY-9RM2kA"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/libs/modernizr.custom.js"></script>
+        <script type="text/javascript" src="js/libs/classie.js"></script>
 
         <!-- Scripts -->
         <script type="text/javascript" src="js/weather.js"></script>
         <script type="text/javascript" src="js/giphy.js"></script>
+        <script type="text/javascript" src="js/slider.js"></script>
+        <script type="text/javascript" src="js/menu.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
 
     </body>

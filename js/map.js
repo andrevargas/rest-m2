@@ -1,4 +1,4 @@
-var Map = (function (Weather) {
+var Map = (function (Weather, Giphy, Menu) {
 
     var _map = null;
     var _marker = null;
@@ -9,7 +9,6 @@ var Map = (function (Weather) {
             .then(function (position) {
                 _createMap(position);
             }, function (error) {
-                console.error(error);
                 _createMap();
             });
     };
@@ -36,7 +35,7 @@ var Map = (function (Weather) {
             long: _marker.getPosition().lng()
         })
             .then(function (data) {
-                _openInfoWindow(data);
+                _searchGiphy(data);
             });
 
     };
@@ -63,20 +62,14 @@ var Map = (function (Weather) {
 
     };
 
-    var _openInfoWindow = function (data) {
+    var _searchGiphy = function (weatherData) {
 
-        var searchTerm = data.weather[0].description;
+        var searchTerm = weatherData.weather[0].description;
         var options = { limit: 5, offset: Math.floor(Math.random() * 5) };
 
         Giphy.getList(searchTerm, options)
-            .then(function (result) {
-
-                var infoWindow = new google.maps.InfoWindow({
-                    content: "<img src='" + result.data[0].images.original.url + "' />"
-                });
-
-                infoWindow.open(_map, _marker);
-
+            .then(function (giphyData) {                
+                Menu.open(weatherData, giphyData);
             });
 
     };
@@ -85,4 +78,4 @@ var Map = (function (Weather) {
         init: _init
     };
 
-}(Weather, Giphy));
+}(Weather, Giphy, Menu));
